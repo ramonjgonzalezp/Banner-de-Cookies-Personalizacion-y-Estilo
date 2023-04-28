@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title></title>
+    <style type="text/css">
+        body {
+            height: 100%;
+            background: #F0F0F0;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #style-generator-form {
+            width: 359px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #style-generator-form > div{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1em;
+        }
+
+        #generator {
+            background: #235c88;
+            color: #fff;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="mt-2">Generador de estilos para banner cookie21.com</h1>
+        <div class="form-container">
+            <form id="style-generator-form" class="m-3 p-3 border border-primary rounded">
+                <div>
+                    <label for="color-fondo">Color de fondo del banner</label>
+                    <input type="color" id="color-fondo" name="color-fondo">
+                </div>
+                <div>
+                    <label for="color-fuente-banner">Color de fuente del banner</label>
+                    <input type="color" id="color-fuente-banner" name="color-fuente-banner">
+                </div>
+                <div>
+                    <label for="color-titulo-banner">Color de los títulos</label>
+                    <input type="color" id="color-titulo-banner" name="color-titulo-banner">
+                </div>
+                <div>
+                    <label for="color-fondo-botones">Color de fondo de los botones</label>
+                    <input type="color" id="color-fondo-botones" name="color-fondo-botones">
+                </div>
+                <div>
+                    <label for="color-fuente-botones">Color de fuente de los botones</label>
+                    <input type="color" id="color-fuente-botones" name="color-fuente-botones">
+                </div>
+                <div>
+                    <label for="mostrar-imagen-cambios-guardados" >Mostrar imagen de cambios guardados</label>
+                    <input type="checkbox" id="mostrar-imagen-cambios-guardados" name="mostrar-imagen-cambios-guardados" checked>
+                </div>
+                <button id="generator" class="border rounded mt-2 p-2">Generar archivo CSS</button>
+            </form>
+        </div>
+        
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+(function() {
+    document.getElementById("generator").addEventListener("click", function(e) {
+        e.preventDefault();
+        generateStyleFile();
+    });
+})();
+</script>
+<script>
+    function generateStyleFile() {
+        let colorFondoBanner =   document.getElementById("color-fondo").value;
+        let colorFuenteBanner = document.getElementById("color-fuente-banner").value;
+        let colorTitulosBanner = document.getElementById("color-titulo-banner").value;
+        let colorFondoBoton = document.getElementById("color-fondo-botones").value;
+        let colorFuenteBoton = document.getElementById("color-fuente-botones").value;
+        let mostrarImagenCambiosGuardados = document.getElementById("mostrar-imagen-cambios-guardados").checked;
+
+        let styleFileContent = ':root{--color-fondo-banner:'+colorFondoBanner+';--color-fuente-banner:'+colorFuenteBanner+';--color-titulos-banner:'+colorTitulosBanner+';--color-fondo-boton:'+colorFondoBoton+';--color-fuente-boton:'+colorFuenteBoton+'}button{color:var(--color-fuente-boton) !important;background-color:var(--color-fondo-boton) !important}.cookiesAlert>*,.cookiesPanel>*,.languagePanel{color:var(--color-fuente-banner) !important;background-color:var(--color-fondo-banner) !important}.cookies__header__title,.cookiesPanel__window__contentWrapper__content__cookieType>header>span{color:var(--color-titulos-banner) !important}.cookies__header__language{color:var(--color-fuente-banner) !important}';
+        styleFileContent +=  mostrarImagenCambiosGuardados ?  '' : '#changes-saved{display:none !important;}';
+
+        download("cookies21-banner-styles.css", styleFileContent);
+    }
+</script>
+<script>
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+</script>
